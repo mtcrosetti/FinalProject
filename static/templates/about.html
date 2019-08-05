@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MLB Predictor</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+  <!-- CSS -->
+  <!-- <link rel="stylesheet" type="text/css" href="../css/style.css"> -->
+  <style>
+      table, th, td {
+        border: 2px solid white;
+        border-collapse: collapse;
+        background-color: black;
+      }
+      th, td {
+        padding: 5px;
+        text-align: left;
+        background-color: black;
+        color:white;
+      }
+      .navbar .navbar-nav {
+      float: none;
+      text-align: center;
+      }
+      .navbar .navbar-collapse {
+      text-align: center;
+      }
+      .myNav{
+      background-color: black;
+      }
+      nav .navbar-nav li a{
+      color: white !important;
+      }
+      </style>
+
+</head>
+
+<body>
+<!-- NAVBAR -->
+  <div class="container-fluid" style="background-color:black">
+    <br>
+    <div class="row">
+      <div class=col-md-4></div>
+      <div class=col-md-4>
+          <img src="../../static/images/mlb-predict3.png" class="img-responsive" width="90%" height="auto">
+      </div>
+      <div class=col-md-4></div>
+    </div>
+    <br>
+  </div>
+  <div class="container-fluid">
+  <nav class="myNav navbar-expand-lg fixed-top" style="text-align:center">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="container-fluid">
+          <div class="row">
+              <div class="collapse navbar-collapse col-lg-12" id="navbarResponsive">
+                <ul class="myUL navbar-nav ml-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost:5000/">Predictor
+                      <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/static/templates/about.html">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/static/templates/sources.html">Sources</a>
+                  </li>
+                </ul>
+              </div>
+          </div>
+        </div>
+    </nav>
+    </div>  
+
+ 
+
+
+  <!--- INTRODUCTION JUMBOTRON -->
+  <!-- <div class="section-1" id="section-1" style="padding: 0px; margin: 0px;">
+    <div class="container-fluid jumbotron" style="padding: 0px; margin: 0px;">
+      <div class="row welcome text-center" style="padding: 0px; margin: 0px;">
+   
+      
+      </div>
+    </div>
+  </div> -->
+
+  <div style="background-color:black; overflow-x:auto; padding-top: 10%; padding-left: 15%; padding-right:15%; padding-bottom:10%;  color: whitesmoke">
+    <!-- <br><br> -->
+    <p>Minor league players are inherently unpredictable. Their success on the other hand is, in some ways, very easy to measure. Players who make it higher through the minor leagues are more successful than ones who do not. A player whose career ends in AAA is far more impressive than one whose career flames out in low A ball. Trying to determine how high they go is a reasonable proxy for their value, as a player who is not likely to make it past AA is less valuable than a player whose top level is AAA, who is obviously less valuable than a player likely to make it to the majors. What follows is an attempt to build a model which will determine how far a player&rsquo;s career is likely to advance based on his current statistical performance.</p>
+    <p>&nbsp;</p>
+    <p>When determining the best way to model a player&rsquo;s future, the first thought was that a player&rsquo;s success was to ignore for the moment his success upon reaching any particular level. The logic in this decision was that any player who makes the majors is more successful than any player who does not and the relative success upon making it is well documented elsewhere. A guy who makes it to the show is always a former big-leaguer and in the retelling, that is the most important part for players who describe their professional career.</p>
+    <p>&nbsp;</p>
+    <p>The next major decision was what type of model would be most successful in attempting to forecast this for each player. Three model types were considered: a deep neural net, a decision tree model, and a random forest classifier. Each of these methods had drawbacks an advantages. Decision trees and random forest models are relatively simple to explain and use, and deep neural nets are very powerful, if not necessarily intuitive.</p>
+    <p>&nbsp;</p>
+    <p>Next, we had to determine what sort of data would be useful in attempting to make these predictions. Luckily baseball, even in the minor leagues has massive troves of data. Using data from the Baseball Cube&rsquo;s <a href="http://www.thebaseballcube.com/about/data.asp">data store</a>, we were able to obtain data for every minor league player season from 1977 to 2018. After cleaning the data to include ages, and positions for every minor leaguer, we were able to have a complete data set.</p>
+    <p>&nbsp;</p>
+    <p>Now that we had a complete dataset, we set out to determine which factors would provide the most information about player&rsquo;s future success. Other projection systems have usually settled on K%, BB%, SB%, BABIP, ISO, Age, and some measure of defense as predictive, and our feature testing confirmed this. One problem we ran into is how to evaluate player defense as our initial dataset did not contain any semblance of defensive value, only the position played. Our solution for this problem was to assign players defensive value based on their position played. For each player, they were assigned the defensive adjustment associated with their position based on the FanGraphs <a href="https://library.fangraphs.com/misc/war/positional-adjustment"/>positional adjustment</a> (-17.5 for DHs all the way up to 12.5 for catchers). This is a minor weakness of our model, as this means that although our model knows that catchers who hit the same as DHs are more likely to make the majors, it does not know the difference between Ryan Doumit and Yadier Molina in terms of their value as catchers. Also, as we did not have reliable data for the playing time split between players who played multiple positions, they were assigned the value for the most valuable position that they played. Future improvements to this model would begin with trying to assign more balanced values for multiple positions and trying to adjust players&rsquo; defensive values based on their relative skill at each position.</p>
+    <p>&nbsp;</p>
+    <p>One concern when building this model is that the baseball environment has changed over time. In the current era, for example, strikeouts and home runs are up. In order to solve for this problem, we decided that rather than using players&rsquo; absolute values for each statistic, we would use their standard deviations above or below the mean player for their league, level, and year. This would help adjust both for changing environments over time, but also the environments at each league, as we know, for example, that the Pacific Coast League has much higher offensive outputs than does the International league, even though both are AAA leagues at the same time.</p>
+    <p>&nbsp;</p>
+    <p>Once we did that, it was time to test the predictive values of our various modelling types. Decision trees were ruled out early in the process, as they fared very poorly in terms of predictive value relative to the other two types of models. The deep neural net model was also eliminated, mostly because it did not outperform the decision tree model and it and also had trouble differentiating between stats at different levels, leading to a level of complexity in the inputs that was unproductive.</p>
+    <p>&nbsp;</p>
+    <p>This left the Random Forest Classifier model as the most effective model. This is a conceptually simple machine learning concept, as it simply builds decision trees which are used to make the predictions. It, at the most basic level simply asks questions about the data to &lsquo;learn&rsquo; on test data, and then tests out what it learns. It will look at the player-season and in making prediction, will ask, &ldquo;What level is the player currently at? Is he young or old for that level? Does he strike out more or less than the mean? Is his power above or below league average? Does he provide defensive value?&rdquo; and using the answers it finds in the test data, will learn how to make player predictions for the non-test data.</p>
+    <p>&nbsp;</p>
+    <p>There are other decisions we had to make about the data, as early versions were prone to overfitting, with some versions being at or above 99% accuracy on the learning dataset and only at 46% on test data. After this, we did model optimization by cycling through the number of estimators (how many decision trees does our model use) and tree depth (how many questions does it ask about each player) to find the optimal balance between performance and avoiding overfitting. That process is seen below:</p>
+    <p>&nbsp;</p>
+    <p><center><img src="https://raw.githubusercontent.com/TrevorCap/BaseBallProject/master/Models/RandForest1.png" alt="Parameter Optimization"></center></p>
+    <p>&nbsp;</p>
+    <p>After doing that, we determined our model was 47% accurate for every player season over 30 plate appearances. In order to compare it to less complicated methods of prediction, we built several &lsquo;dumb&rsquo; models. One model assumed that each player&rsquo;s top level would be either one or two level higher than where he currently was. One assumed every player would make the major leagues, and one assumed that each player season was already at his peak level. Each of these &lsquo;dumb&rsquo; models scored somewhere in the 28%-34% range, so our model did significantly outperform these models and added informational value.</p>
+    <p>&nbsp;</p>
+    <p>This exercise is especially informative for using for fringe prospects. As always, a statistical model should be used in conjunction with scouting information and rankings to identify players whose performance may be especially impressive relative to his tools or for players whose performance might lag significantly behind those tools. We have made searching the 2019 version of the database possible on the&nbsp; &lsquo;Predictor&rsquo; tab. Enjoy!</p>
+  
+   
+
+    <br>
+    <br>
+  </div>
+
+
+
+
+  <!-- FOOTER -->
+  <div class="section-footer" id="section-footer">
+    <div class="container-fluid padding">
+      <div class="row text-center">
+        <div class="col-12">
+          <footer>
+            <div class="footer">
+                <img src="../../static/images/C2.png" width="10%" height="auto">
+                <p>© 2019 C² Baseball Solutions</p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Javascript -->
+<!-- <script src="../static/js/menus.js"></script> -->
+</body>
+
+</html>

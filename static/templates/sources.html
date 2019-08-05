@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MLB Predictor</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+  <!-- CSS -->
+  <!-- <link rel="stylesheet" type="text/css" href="../css/style.css"> -->
+  <style>
+      table, th, td {
+        border: 2px solid white;
+        border-collapse: collapse;
+        background-color: black;
+      }
+      th, td {
+        padding: 5px;
+        text-align: left;
+        background-color: black;
+        color:white;
+      }
+      .navbar .navbar-nav {
+      float: none;
+      text-align: center;
+      }
+      .navbar .navbar-collapse {
+      text-align: center;
+      }
+      .myNav{
+      background-color: black;
+      }
+      nav .navbar-nav li a{
+      color: white !important;
+      }
+      </style>
+
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <div class="container-fluid" style="background-color:black">
+    <br>
+    <div class="row">
+      <div class=col-md-4></div>
+      <div class=col-md-4>
+          <img src="../../static/images/mlb-predict3.png" class="img-responsive" width="90%" height="auto">
+      </div>
+      <div class=col-md-4></div>
+    </div>
+    <br>
+  </div>
+  <div class="container-fluid">
+  <nav class="myNav navbar-expand-lg fixed-top" style="text-align:center">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="container-fluid">
+          <div class="row">
+              <div class="collapse navbar-collapse col-lg-12" id="navbarResponsive">
+                <ul class="myUL navbar-nav ml-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost:5000/">Predictor
+                      <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/static/templates/about.html">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/static/templates/sources.html">Sources</a>
+                  </li>
+                </ul>
+              </div>
+          </div>
+        </div>
+    </nav>
+    </div>  
+
+
+
+  <!--- INTRODUCTION JUMBOTRON -->
+  <!-- <div class="section-1" id="section-1" style="padding: 0px; margin: 0px;">
+    <div class="container-fluid jumbotron" style="padding: 0px; margin: 0px;">
+      <div class="row welcome text-center" style="padding: 0px; margin: 0px;">
+   
+      
+      </div>
+    </div>
+  </div> -->
+
+  <div style="background-color:lightgray; overflow-x:auto; padding: 5%; color: black">
+    <!-- <br><br> -->
+    <center>
+    <p style="font-size:30px">Sources:</p>
+    <br>
+    <p style="font-size:18px"><a href="https://www.thebaseballcube.com">The Baseball Cube</a></p>
+    <p style="font-size:18px"> TheBaseballCube was used to generate MiLB and MLB statistics from 1977 through 2018.
+    <br><br>
+    <p style="font-size:18px"><a href="https://www.fangraphs.com">Fangraphs.com</a></p> 
+    <p style="font-size:18px"> Fangraphs provided the MiLB statistics for all minor leaguers in 2019.      
+    <br><br>
+    <p style="font-size:18px"><a href="https://www.baseball-reference.com">Baseball-Reference.com</a></p>
+    <p style="font-size:18px"> Baseball-Reference provided the names and ages for players in our 1977-2018 model.</p>
+    <br>
+    <p style="font-size:18px"><a href="https://rmm5t.github.io/jquery-flexselect/">FlexSelect (JQuery)</a></p>
+    <p style="font-size:18px">FlexSelect (by <a href="https://twitter.com/rmm5t">Ryan McGeary</a>) allowed searchable dropdown menus for searching.</p>
+    <br><br><br>
+    <p style="font-size:30px">Special Thanks to:</p>
+    <br>
+    <p style="font-size:18px">Danny Clifford and Andris Rubin-Schwarz - the many speedbumps along the way</p>
+    <br>
+    <p style="font-size:18px">Michael Antry - for help with Flask, GET/POST</p>
+    <br>
+    <p style="font-size:18px">Joseph Villavicencio - for help with FlexSelect</p>
+   </div>
+
+
+
+
+  <!-- FOOTER -->
+  <div class="section-footer" id="section-footer">
+    <div class="container-fluid padding">
+      <div class="row text-center">
+        <div class="col-12">
+          <footer>
+            <div class="footer">
+                <img src="../../static/images/C2.png" width="10%" height="auto">
+                <p>© 2019 C² Baseball Solutions</p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Javascript -->
+<!-- <script src="../static/js/menus.js"></script> -->
+</body>
+
+</html>

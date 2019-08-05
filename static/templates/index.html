@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MLB Predictor</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/flexselect.css" type="text/css" media="screen" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('static', filename='js/jquery.flexselect.js') }}"  type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='js/liquidmetal.js') }}" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js"></script>
+  <script src="{{ url_for('static', filename='js/menus.js') }}" type="text/javascript"></script>
+  <script src="../static/js/menus.js" type="text/javascript"></script>
+
+
+  <!-- CSS -->
+  <!-- <link rel="stylesheet" type="text/css" href="../static/css/style.css"> -->
+  <link type="text/css" rel="stylesheet" href="{{url_for("static", filename="css/flexselect.css")}}">
+  <style>
+      table, th, td {
+        border: 2px solid white;
+        border-collapse: collapse;
+        background-color: black;
+      }
+      th, td {
+        padding: 5px;
+        text-align: left;
+        background-color: black;
+        color:white;
+      }
+      .navbar .navbar-nav {
+      float: none;
+      text-align: center;
+      }
+      .navbar .navbar-collapse {
+      text-align: center;
+      }
+      .myNav{
+      background-color: black;
+      }
+      nav .navbar-nav li a{
+      color: white !important;
+      }
+      /* .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+    }
+
+      .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+      .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }       */
+  </style>
+
+</head>
+
+<body>
+
+
+  <!-- NAVBAR -->
+  <div class="container-fluid" style="background-color:black">
+    <br>
+    <div class="row">
+      <div class=col-md-4></div>
+      <div class=col-md-4>
+          <img src="../../static/images/mlb-predict3.png" class="img-responsive" width="90%" height="auto">
+      </div>
+      <div class=col-md-4></div>
+    </div>
+    <br>
+  </div>
+  <div class="container-fluid">
+  <nav class="myNav navbar-expand-lg fixed-top" style="text-align:center">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="container-fluid">
+          <div class="row">
+              <div class="collapse navbar-collapse col-lg-12" id="navbarResponsive">
+                <ul class="myUL navbar-nav ml-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost:5000/">Predictor
+                      <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/static/templates/about.html">About</a>
+                  </li>  
+                  <li class="nav-item">
+                    <a class="nav-link" href="/static/templates/sources.html">Sources</a>
+                  </li>
+                </ul>
+              </div>
+          </div>
+        </div>
+    </nav>
+    </div>  
+
+
+
+  <!--- INTRODUCTION JUMBOTRON -->
+  <div class="section-1" id="section-1" style="padding: 0px; margin: 0px;">
+    <div class="container-fluid jumbotron" style="padding: 0px; margin: 0px;">
+      <div class="row welcome text-center" style="padding: 0px; margin: 0px;">
+        <div class="col-12">
+          <br><br>
+        </div>
+        <div class="col-12">
+          <p class="lead" style="margin-left:280px; margin-right:280px;">Below is a searchable directory of all minor league position players with at least 30 plate appearances in 2019. Data is current as of 7/31/2019. Numbers displayed are presented as standard deviations above or below their league average. Hover over any statistic for its full name and detailed explanation of what it represents.<br><br>
+        </div>
+      </div>
+      <!-- Predictor Model Dropdowns -->
+      <div class="dropdown"><center>
+          <form action="http://localhost:5000/results" method = "POST">
+            <select class="flexselect" name="name">
+              <option value="" name="name" selected disabled hidden></option>
+            </select>
+            <input type="submit" id="subbtn" value="Run It!">
+          </form>
+          </center>
+      </div>
+      <br><br>
+    </div>
+  </div>
+
+  <div style="background-color:black; overflow-x:auto;">
+    <br><br>
+    <center><table>
+      <tr>
+        <th>Player Name</th>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Predicted Level</th>
+      </tr>
+      <tr>
+        <th><center>{{Name}}</center></th>
+        <th><center>{{Team}}</center></th>
+        <th><center>{{Position}}</center></th>
+        <th><center>{{Predicted}}</center></th>
+      </tr>
+    </table>
+    <br><br>
+    <table>
+      <tr>
+        <th>Age</th>
+        <th>DEF</th>
+          <!-- <span class="tooltiptext">DEF: based on difficulty of primary position played defensively.</span> -->
+        <th>ISO%</th>
+          <!-- <span class="tooltiptext">ISO% (Isolated Power): Slugging percentage - Batting Average.</span> -->
+        <th>BB%</th>
+          <!-- <span class="tooltiptext">BB%: How often a batter walks.</span> -->
+        <th>K%</th>
+          <!-- <span class="tooltiptext">K%: How often a batter strikes out.</span> -->
+        <th>SB%</th>
+          <!-- <span class="tooltiptext">SB%: The number of steals for a player divided by his total number of attempts.</span> -->
+        <th>BABIP</th>
+          <!-- <span class="tooltiptext">BABIP (Batted Balls In Play): Excluding homeruns, the batting average of a hitter for balls hit in play.</span> -->
+      </tr>
+      <tr>
+        <th>{{Age}}</th>
+        <th>{{Def}}</th>
+        <th>{{Iso}}</th>
+        <th>{{BB}}</th>
+        <th>{{Strikeout}}</th>
+        <th>{{SB}}</th>
+        <th>{{Babip}}</th>
+      </tr>
+    </table>
+    </center>
+    
+      <!-- </tr>>Player Name: {{Name}}
+    <br>
+    Position: {{Position}}
+    <br>
+    Level Predicted: {{Predicted}}
+    <br><hr>
+    Age: {{Age}}
+    <br>
+    DEF: {{Def}}
+    <br>
+    ISO%: {{Iso}}
+    <br>
+    BB%: {{BB}}
+    <br>
+    K%: {{Strikeout}}
+    <br>
+    SB%: {{SB}}
+    <br>
+    BABIP: {{Babip}}
+    <br> -->
+   
+
+    <br>
+    <br>
+  </div>
+
+
+
+
+  <!-- FOOTER -->
+  <div class="section-footer" id="section-footer">
+    <div class="container-fluid padding">
+      <div class="row text-center">
+        <div class="col-12">
+          <footer>
+            <div class="footer">
+                <img src="../../static/images/C2.png" width="15%" height="auto">
+                <p>© 2019 C² Baseball Solutions</p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Javascript -->
+<script src="../static/js/menus.js"></script>
+</body>
+</html>

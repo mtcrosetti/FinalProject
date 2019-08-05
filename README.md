@@ -1,2 +1,2 @@
-# FinalProject
-MLB Predictor based on MiLB/MLB stats from 1977-2018
+# BaseBallProject
+A data scraping project in Python with Matt Crosetti
